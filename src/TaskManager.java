@@ -7,7 +7,7 @@ public class TaskManager {
     HashMap<Integer, Epic> epicMap = new HashMap<>();
     HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
 
-    Object object = new Object();
+
     int id = new Random().nextInt(1000);
 
     public Task createTask(Task task) {
@@ -30,14 +30,15 @@ public class TaskManager {
         taskMap.clear();
     }
 
-    public Object getTaskById(Integer id) {
+    public Task getTaskById(Integer id) {
+       Task taskN=new Task();
         if (taskMap.containsKey(id)) {
-            object = taskMap.get(id);
+           taskN = taskMap.get(id);
 
         } else {
             System.out.println("Такого номера Task нет.");
         }
-        return object;
+        return taskN;
     }
 
     public void deleteTaskById(Integer id) {
@@ -78,14 +79,14 @@ public class TaskManager {
         return epicL;
     }
 
-    public Object getEpicById(Integer id) {
-
+    public Epic getEpicById(Integer id) {
+        Epic ep = new Epic();
         if (epicMap.containsKey(id)) {
-            object = epicMap.get(id);
+            ep = epicMap.get(id);
         } else {
             System.out.println("Такого номера Epic нет.");
         }
-        return object;
+        return ep;
     }
 
     public void deleteEpicById(Integer id) {
@@ -108,18 +109,20 @@ public class TaskManager {
 
     public void epicCheckStatus(int id) {
         if (epicMap.containsKey(id)) {
-            for (int i = 0; i < epicMap.get(id).getListOfStatus(id).size(); i++) {
-
-                boolean allSame = epicMap.get(id).getListOfStatus(id).stream().distinct().count() == 1;
-                if (epicMap.get(id).getListOfStatus(id).isEmpty()) {
-                    epicMap.get(id).setTaskStatus(TaskStatus.NEW);
-                } else if (allSame && epicMap.get(id).getListOfStatus(id).get(i).equals(TaskStatus.DONE)) {
-                    epicMap.get(id).setTaskStatus(TaskStatus.DONE);
-                } else if (allSame && epicMap.get(id).getListOfStatus(id).get(i).equals(TaskStatus.NEW)) {
-                    epicMap.get(id).setTaskStatus(TaskStatus.NEW);
-                } else {
-                    epicMap.get(id).setTaskStatus(TaskStatus.IN_PROGRESS);
+            if (getAllEpicSubtasks(id).isEmpty()) {
+                epicMap.get(id).setTaskStatus(TaskStatus.NEW);
+            } else {
+                for (int i = 0; i < epicMap.get(id).getListOfStatus(id).size(); i++) {
+                    boolean allSame = epicMap.get(id).getListOfStatus(id).stream().distinct().count() == 1;
+                    if (allSame && epicMap.get(id).getListOfStatus(id).get(i).equals(TaskStatus.DONE)) {
+                        epicMap.get(id).setTaskStatus(TaskStatus.DONE);
+                    } else if (allSame && epicMap.get(id).getListOfStatus(id).get(i).equals(TaskStatus.NEW)) {
+                        epicMap.get(id).setTaskStatus(TaskStatus.NEW);
+                    } else {
+                        epicMap.get(id).setTaskStatus(TaskStatus.IN_PROGRESS);
+                    }
                 }
+
             }
         }
     }
@@ -165,21 +168,29 @@ public class TaskManager {
     }
 
 
-    public Object getSubTaskById(Integer id) {
+    public SubTask getSubTaskById(Integer id) {
+        SubTask sub = new SubTask();
         if (subTaskMap.containsKey(id)) {
-            object = subTaskMap.get(id);
+            sub = subTaskMap.get(id);
         } else {
             System.out.println("Такого номера SubTask нет.");
         }
-        return object;
+        return sub;
 
     }
 
+
     public void deleteSubTaskById(Integer id) {
         if (subTaskMap.containsKey(id)) {
+            int epicId = getSubTaskById(id).getEpicId();
             subTaskMap.remove(id);
-        } else {
-            System.out.println("Такого номера SubTask нет.");
+            for (int i = 0; i < getEpicById(epicId).getListOfSubTask(epicId).size(); i++) {
+
+                if (getEpicById(epicId).getListOfSubTask(epicId).get(i).getId() == id) {
+                    getEpicById(epicId).getListOfSubTask(epicId).remove(i);
+                }
+            }
+            epicCheckStatus(epicId);
         }
     }
 
@@ -199,7 +210,9 @@ public class TaskManager {
 
     public void deleteAllSubTasks() {
         subTaskMap.clear();
-
+        for (int i = 0; i < getAllEpics().size(); i++) {
+            getAllEpicSubtasks(getAllEpics().get(i).getId()).clear();
+            epicCheckStatus(getAllEpics().get(i).getId());
+        }
     }
 }
-

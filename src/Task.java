@@ -13,6 +13,10 @@ public class Task {
         this.taskStatus = taskStatus;
     }
 
+    public Task() {
+
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

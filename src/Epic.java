@@ -4,7 +4,13 @@ import java.util.HashMap;
 
 public class Epic extends Task {
 
+
+
     private HashMap<Integer, ArrayList<SubTask>> subTasksEpic = new HashMap<>();
+
+    public Epic() {
+
+    }
 
 
     public ArrayList<TaskStatus> getListOfStatus(int id) {

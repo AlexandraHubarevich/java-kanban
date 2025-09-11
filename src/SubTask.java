@@ -2,6 +2,10 @@ public class SubTask extends Task {
 
     private int epicId;
 
+    public SubTask() {
+        super();
+    }
+
     public int getEpicId() {
         return epicId;
     }
