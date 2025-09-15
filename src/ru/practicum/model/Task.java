@@ -5,26 +5,28 @@ import java.util.Objects;
 public class Task {
     protected String name;//Название, кратко описывающее суть задачи (например, «Переезд»).
     protected String description; //Описание, в котором раскрываются детали.
-    protected Integer id;//Уникальный идентификационный номер задачи, по которому её можно будет найти
+    protected int id;//Уникальный идентификационный номер задачи, по которому её можно будет найти
     protected TaskStatus taskStatus;
 
-    public Task(String name, String description, TaskStatus taskStatus, Integer id) {
-        this.description = description;
-        this.id = id;
-        this.name = name;
-        this.taskStatus = taskStatus;
-    }
     public Task(String name, String description, TaskStatus taskStatus) {
-        this.name = name;
         this.description = description;
+        this.name = name;
         this.taskStatus = taskStatus;
     }
+
+    public Task(String name, String description, TaskStatus taskStatus, int id) {
+        this.description = description;
+        this.name = name;
+        this.taskStatus = taskStatus;
+        this.id = id;
+    }
+
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -40,7 +42,7 @@ public class Task {
         return description;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -55,18 +57,19 @@ public class Task {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false; // можно оформить и так
+        if (obj == null || getClass() != obj.getClass()) return false;
         Task otherTask = (Task) obj;
         return Objects.equals(id, otherTask.id);
     }
+
     @Override
     public int hashCode() {
         int hash = 17;
-        if (id != null) {
-            hash = id.hashCode();
+        if (id != 0) {
+            hash = id;
         }
 
-        return hash; // возвращаем хеш
+        return hash;
     }
 
     @Override

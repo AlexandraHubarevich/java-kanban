@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Epic extends Task {
 
 
-    final private ArrayList<Integer> epicSubTasksID = new ArrayList<>();
+    private final ArrayList<Integer> epicSubTasksID = new ArrayList<>();
 
-    public ArrayList<Integer> getEpicSubTasksID(int id) {
+    public ArrayList<Integer> getEpicSubTasksID() {
         return epicSubTasksID;
     }
 
@@ -18,7 +18,7 @@ public class Epic extends Task {
     public void deleteEpicSubTask(int subTaskID) {
         for (int i = 0; i < epicSubTasksID.size(); i++) {
             if (epicSubTasksID.get(i) == subTaskID)
-                epicSubTasksID.remove(i);
+                epicSubTasksID.remove((Integer) subTaskID);
         }
     }
 
@@ -39,7 +39,9 @@ public class Epic extends Task {
         return "{Название задачи Epic='" + name + '\'' +
                 ", Описание='" + description + '\'' +
                 ", Статус задачи =" + taskStatus + '\'' +
-                ", ID=" + id +
+                ", ID=" + id + '\'' +
+                ", epicSubTasksID=" + epicSubTasksID +
                 '}';
     }
 }
+
