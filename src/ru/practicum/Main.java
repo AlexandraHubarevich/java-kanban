@@ -15,7 +15,8 @@ public class Main {
         manager.createTask(task1);
         System.out.println(manager.getAllTasks());
 
-        Task task14 = new Task("task2change", "desc2change", TaskStatus.DONE, task1.getId());
+        Task task14 = new Task("task2change", "desc2change", TaskStatus.DONE);
+        task14.setId(task1.getId());
 
         Epic epic = new Epic("epic1", "epicDesc1", TaskStatus.NEW);
         Epic epic1 = new Epic("epic2", "epicDesc2", TaskStatus.NEW);
@@ -24,7 +25,8 @@ public class Main {
         manager.createEpic(epic1);
         System.out.println(manager.getAllEpics());
 
-        Epic epic21 = new Epic("epic2ch", "epicDesc2ch", TaskStatus.DONE, epic.getId());
+        Epic epic21 = new Epic("epic2ch", "epicDesc2ch", TaskStatus.DONE);
+        epic21.setId(epic.getId());
         SubTask subTask = new SubTask("subTask1", "subTaskDesc1", TaskStatus.DONE, epic.getId());
         SubTask subTask1 = new SubTask("subTask2", "subTaskDesc2", TaskStatus.DONE, epic.getId());
         SubTask subTask2 = new SubTask("subTask3", "subTaskDesc3", TaskStatus.DONE, epic1.getId());
@@ -32,8 +34,8 @@ public class Main {
         manager.createSubTask(subTask);
         manager.createSubTask(subTask1);
         manager.createSubTask(subTask2);
-        SubTask subTask23 = new SubTask("subTask3ch", "subTaskDesc3ch", TaskStatus.NEW, epic.getId(), subTask.getId());
-
+        SubTask subTask23 = new SubTask("subTask3ch", "subTaskDesc3ch", TaskStatus.NEW, epic.getId());
+        subTask23.setId(subTask.getId());
         System.out.println(manager.getAllSubTask());
         manager.updateTask(task14);
         manager.updateEpic(epic21);

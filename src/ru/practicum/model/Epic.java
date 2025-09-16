@@ -16,10 +16,7 @@ public class Epic extends Task {
     }
 
     public void deleteEpicSubTask(int subTaskID) {
-        for (int i = 0; i < epicSubTasksID.size(); i++) {
-            if (epicSubTasksID.get(i) == subTaskID)
-                epicSubTasksID.remove((Integer) subTaskID);
-        }
+        epicSubTasksID.remove((Integer) subTaskID);
     }
 
     public void cleanEpicSubTask() {
@@ -28,10 +25,6 @@ public class Epic extends Task {
 
     public Epic(String name, String description, TaskStatus taskStatus) {
         super(name, description, taskStatus);
-    }
-
-    public Epic(String name, String description, TaskStatus taskStatus, int id) {
-        super(name, description, taskStatus, id);
     }
 
     @Override

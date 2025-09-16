@@ -12,11 +12,6 @@ public class SubTask extends Task {
         this.epicId = epicId;
     }
 
-    public SubTask(String name, String description, TaskStatus taskStatus, int epicId, int id) {
-        super(name, description, taskStatus, id);
-        this.epicId = epicId;
-    }
-
     @Override
     public String toString() {
         return "{Название задачи SubTask='" + name + '\'' +
