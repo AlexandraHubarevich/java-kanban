@@ -2,13 +2,16 @@ package ru.practicum.model;
 
 import java.util.ArrayList;
 
-public class Epic extends Task {
-
+public class Epic extends Task implements Cloneable {
 
     private final ArrayList<Integer> epicSubTasksID = new ArrayList<>();
 
     public ArrayList<Integer> getEpicSubTasksID() {
         return epicSubTasksID;
+    }
+
+    public Epic clone() throws CloneNotSupportedException {
+        return (Epic) super.clone();
     }
 
     public void addSubTaskToEpicId(SubTask subTask) {
