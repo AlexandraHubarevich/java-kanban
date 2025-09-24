@@ -2,7 +2,7 @@ package ru.practicum.model;
 
 import java.util.Objects;
 
-public class Task {
+public class Task implements Cloneable {
     protected String name;//Название, кратко описывающее суть задачи (например, «Переезд»).
     protected String description; //Описание, в котором раскрываются детали.
     protected int id;//Уникальный идентификационный номер задачи, по которому её можно будет найти
@@ -13,7 +13,9 @@ public class Task {
         this.name = name;
         this.taskStatus = taskStatus;
     }
-
+    public Task clone() throws CloneNotSupportedException{
+        return (Task) super.clone();
+    }
     public void setDescription(String description) {
         this.description = description;
     }

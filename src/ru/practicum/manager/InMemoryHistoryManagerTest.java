@@ -2,8 +2,10 @@ package ru.practicum.manager;
 
 import org.junit.jupiter.api.Test;
 import ru.practicum.model.Epic;
+import ru.practicum.model.Task;
 import ru.practicum.model.TaskStatus;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class InMemoryHistoryManagerTest {
@@ -22,8 +24,9 @@ class InMemoryHistoryManagerTest {
         manager.updateEpic(epic1);
         manager.getEpicById(epic.getId());
         assertTrue(manager.getHistory().size() == 2);
-        assertTrue(manager.getHistory().get(0).getName().equals("epic1"));
-        assertTrue(manager.getHistory().get(0).getDescription().equals("epicDesc1"));
-        assertTrue(manager.getHistory().get(0).getTaskStatus().equals(TaskStatus.NEW));
+        Task epicFirst = manager.getHistory().get(0);
+        Task epicSecond = manager.getHistory().get(1);
+        assertFalse(epicFirst.getName().equals(epicSecond.getName()));
+        assertFalse(epicFirst.getDescription().equals(epicSecond.getDescription()));
     }
 }

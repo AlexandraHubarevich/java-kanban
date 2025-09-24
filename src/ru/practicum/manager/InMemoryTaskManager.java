@@ -14,23 +14,11 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Epic> epics = new HashMap<>();
     private final HashMap<Integer, SubTask> subTasks = new HashMap<>();
     private int id = 0;
-    HistoryManager historyManager = Managers.getDefaultHistory();
+    final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
-    }
-
-    public HashMap<Integer, Task> getTasks() {
-        return tasks;
-    }
-
-    public HashMap<Integer, Epic> getEpics() {
-        return epics;
-    }
-
-    public HashMap<Integer, SubTask> getSubTasks() {
-        return subTasks;
     }
 
     @Override
@@ -42,7 +30,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> getAllTasks() {
+    public List<Task> getAllTasks() {
         return new ArrayList<>(tasks.values());
     }
 
@@ -52,7 +40,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTaskById(int id) {
+    public Task getTaskById(int id) throws CloneNotSupportedException {
         historyManager.add(tasks.get(id));
         return tasks.get(id);
     }
@@ -84,14 +72,13 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Epic> getAllEpics() {
+    public List<Epic> getAllEpics() {
         return new ArrayList<>(epics.values());
     }
 
     @Override
     public Epic getEpicById(int id) throws CloneNotSupportedException {
-        Epic epic = epics.get(id).clone();
-        historyManager.add(epic);
+        historyManager.add(epics.get(id));
         return epics.get(id);
     }
 
@@ -108,8 +95,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<SubTask> getAllEpicSubtasks(int id) {
-        ArrayList<SubTask> newL = new ArrayList<>();
+    public List<SubTask> getAllEpicSubtasks(int id) {
+        List<SubTask> newL = new ArrayList<>();
         if (epics.containsKey(id)) {
             for (int i : epics.get(id).getEpicSubTasksID()) {
                 newL.add(subTasks.get(i));
@@ -120,9 +107,8 @@ public class InMemoryTaskManager implements TaskManager {
         return newL;
     }
 
-    @Override
-    public void epicCheckStatus(int id) {
-        ArrayList<TaskStatus> subList = new ArrayList<>();
+    private void epicCheckStatus(int id) {
+        List<TaskStatus> subList = new ArrayList<>();
         if (epics.containsKey(id)) {
             Epic epic = epics.get(id);
             if (epic.getEpicSubTasksID().isEmpty()) {
@@ -175,12 +161,12 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<SubTask> getAllSubTask() {
+    public List<SubTask> getAllSubTask() {
         return new ArrayList<>(subTasks.values());
     }
 
     @Override
-    public SubTask getSubTaskById(int id) {
+    public SubTask getSubTaskById(int id) throws CloneNotSupportedException {
         historyManager.add(subTasks.get(id));
         return subTasks.get(id);
     }

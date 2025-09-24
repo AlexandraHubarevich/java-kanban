@@ -7,19 +7,21 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    List<Task> list=new ArrayList<>();
+    private final List<Task> list = new ArrayList<>();
+
     @Override
-   public List<Task> getHistory() {
-        return list;
+    public List<Task> getHistory() {
+        return new ArrayList<>(list);
     }
 
     @Override
-    public void add(Task task) {
-        if(list.size() < 10) {
-               list.add(task);
-          } else {
-                  list.remove(0);
-                  list.add(task);
-              }
-           }
+    public void add(Task task) throws CloneNotSupportedException {
+        if (task == null) {
+            return;
+        }
+        if (list.size() > 10) {
+            list.removeFirst();
+        }
+        list.add(task.clone());
     }
+}

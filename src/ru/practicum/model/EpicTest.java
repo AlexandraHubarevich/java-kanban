@@ -1,33 +1,23 @@
-package test;
+package ru.practicum.model;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.practicum.manager.InMemoryTaskManager;
-import ru.practicum.model.Epic;
-import ru.practicum.model.SubTask;
-import ru.practicum.model.TaskStatus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class EpicTest {
     InMemoryTaskManager manager = new InMemoryTaskManager();
 
     @Test
-    public void checkEpicIsEqualIfSameID() throws CloneNotSupportedException {
+    public void checkEpicIsEqualIfSameID() {
         Epic epic = new Epic("epic1", "epicDesc1", TaskStatus.NEW);
         Epic epic1 = new Epic("epic2", "epicDesc2", TaskStatus.NEW);
-        manager.createEpic(epic);
-        manager.createEpic(epic1);
-        final int firstID = epic.getId();
-        final int secondID = epic1.getId();
-        Assertions.assertNotEquals(firstID, secondID, "Ids should not be equal");
-        System.out.println(manager.getEpicById(firstID));
-        assertTrue(manager.getEpicById(firstID).getName().equals(epic.getName()));
-        assertTrue(manager.getEpicById(firstID).getTaskStatus().equals(epic.getTaskStatus()));
-        assertTrue(manager.getEpicById(firstID).getDescription().equals(epic.getDescription()));
-        assertTrue(manager.getEpicById(firstID).getId() == epic.getId());
+        epic.setId(1);
+        epic1.setId(1);
+        assertTrue(epic.equals(epic1));
     }
 
     @Test
@@ -39,10 +29,21 @@ class EpicTest {
         int epic3ID = epic3.getId();
         manager.createSubTask(subTask1);
         manager.createSubTask(subTask2);
-        ArrayList<SubTask> returnFromEpic = manager.getAllEpicSubtasks(epic3ID);
-        assertTrue(returnFromEpic.size() ==2);
+        List<SubTask> returnFromEpic = manager.getAllEpicSubtasks(epic3ID);
+        assertTrue(returnFromEpic.size() == 2);
         assertTrue(returnFromEpic.contains(subTask1));
         assertTrue(returnFromEpic.contains(subTask2));
         assertTrue(epic3.getTaskStatus().equals(TaskStatus.IN_PROGRESS));
+    }
+
+    @Test
+    void testEpicCannotBeAddedAsSubtask() {
+        Epic epic4 = new Epic("epic4", "epicDesc4", TaskStatus.NEW);
+        manager.createEpic(epic4);
+        int idEpic = epic4.getId();
+        epic4.getEpicSubTasksID().add(idEpic);
+        List<SubTask> listOfSubTask = manager.getAllEpicSubtasks(idEpic);
+        assertTrue(listOfSubTask.get(0) == null);
+        assertTrue(!listOfSubTask.contains(epic4));
     }
 }

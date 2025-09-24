@@ -11,22 +11,21 @@ public interface TaskManager {
 
 
     Integer createTask(Task taskNew);
-    ArrayList<Task> getAllTasks();
+    List<Task> getAllTasks();
     void deleteAllTasks();
-    Task getTaskById(int id);
+    Task getTaskById(int id) throws CloneNotSupportedException;
     void deleteTaskById(int id);
     Task updateTask(Task taskNew);
     Integer createEpic(Epic epicNew);
-    ArrayList<Epic> getAllEpics();
+    List<Epic> getAllEpics();
     Epic getEpicById(int id) throws CloneNotSupportedException;
     void deleteEpicById(int id);
-    ArrayList<SubTask> getAllEpicSubtasks(int id);
-    void epicCheckStatus(int id);
+    List<SubTask> getAllEpicSubtasks(int id);
     Epic updateEpic(Epic epicNew);
     void deleteAllEpics();
     Integer createSubTask(SubTask subTaskNew);
-    ArrayList<SubTask> getAllSubTask();
-    SubTask getSubTaskById(int id);
+    List<SubTask> getAllSubTask();
+    SubTask getSubTaskById(int id) throws CloneNotSupportedException;
     void deleteSubTaskById(int id);
     SubTask updateSubTask(SubTask subTaskNew);
     void deleteAllSubTasks();
