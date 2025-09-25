@@ -2,7 +2,7 @@ package ru.practicum.model;
 
 import java.util.ArrayList;
 
-public class Epic extends Task{
+public class Epic extends Task {
 
     private final ArrayList<Integer> epicSubTasksID = new ArrayList<>();
 
@@ -10,8 +10,11 @@ public class Epic extends Task{
         return epicSubTasksID;
     }
 
-    public void addSubTaskToEpicId(SubTask subTask) {
-        epicSubTasksID.add(subTask.getId());
+    public void addSubTaskToEpicId(int subTaskId) {
+        if (id == subTaskId) {
+            return;
+        }
+        epicSubTasksID.add(subTaskId);
     }
 
     public void deleteEpicSubTask(int subTaskID) {

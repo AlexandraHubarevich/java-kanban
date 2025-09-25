@@ -41,9 +41,9 @@ class EpicTest {
         Epic epic4 = new Epic("epic4", "epicDesc4", TaskStatus.NEW);
         manager.createEpic(epic4);
         int idEpic = epic4.getId();
-        epic4.getEpicSubTasksID().add(idEpic);
+        epic4.addSubTaskToEpicId(idEpic);
         List<SubTask> listOfSubTask = manager.getAllEpicSubtasks(idEpic);
-        assertTrue(listOfSubTask.get(0) == null);
+        assertTrue(listOfSubTask.size() == 0);
         assertTrue(!listOfSubTask.contains(epic4));
     }
 }

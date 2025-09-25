@@ -21,5 +21,3 @@ class ManagersTest {
         assertNotNull(historyManager.getHistory());
     }
 }
-
-

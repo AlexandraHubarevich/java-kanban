@@ -1,11 +1,10 @@
 package ru.practicum.model;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.practicum.manager.InMemoryTaskManager;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SubTaskTest {
     InMemoryTaskManager manager = new InMemoryTaskManager();
@@ -19,16 +18,16 @@ public class SubTaskTest {
         SubTask subTask1 = new SubTask("subTask1", "subTaskDesc1", TaskStatus.DONE, epic.getId());
         subTask.setId(1);
         subTask1.setId(1);
-        assertTrue(subTask.equals(subTask1));
+        Assertions.assertTrue(subTask.equals(subTask1));
     }
 
     @Test
     public void checkSubTaskCannotBeCreatedIfIncorrectEpicID() throws CloneNotSupportedException {
         SubTask subTask = new SubTask("subTask0", "subTaskDesc0", TaskStatus.DONE, 256);
         manager.createSubTask(subTask);
-        assertTrue(manager.createSubTask(subTask) == -1);
-        assertTrue(manager.getSubTaskById(subTask.getId()) == null);
-        assertTrue(manager.getAllSubTask().size() == 0);
+        Assertions.assertTrue(manager.createSubTask(subTask) == -1);
+        Assertions.assertTrue(manager.getSubTaskById(subTask.getId()) == null);
+        Assertions.assertTrue(manager.getAllSubTask().size() == 0);
     }
 
     @Test
@@ -41,9 +40,9 @@ public class SubTaskTest {
         SubTask subTask1 = new SubTask("subTask0UPD", "subTaskDescUPD", TaskStatus.DONE, idSubTask);
         subTask1.setId(idSubTask);
         manager.updateSubTask(subTask1);
+        epic4.addSubTaskToEpicId(idSubTask);
         List<SubTask> listSub = manager.getAllEpicSubtasks(idSubTask);
-        assertTrue(listSub.size() == 0);
-        assertTrue(!listSub.contains(subTask1));
+        Assertions.assertTrue(listSub.size() == 0);
+        Assertions.assertTrue(!listSub.contains(subTask1));
     }
 }
-
